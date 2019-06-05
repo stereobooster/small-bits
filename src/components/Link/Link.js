@@ -7,25 +7,28 @@ const Link = styled("a")(() => ({
   ":visited": {
     color: "#666"
   },
-  "textDecoration": "underline blue",
-  "textDecorationSkipInk": "auto"
+  textDecoration: "underline blue",
+  textDecorationSkipInk: "auto"
 }));
 
-export default ({ children, target, onClick, ...rest }) => (
-  <Link
-    {...rest}
-    onClick={e => {
-      if (e.ctrlKey || e.metaKey) {
-        // do nothing
-      } else {
-        e.preventDefault();
-        onClick(e);
-      }
-    }}
-    target={target}
-    {...(target === "_blank" ? { rel: "noopener" } : undefined)}
-  >
-    {children}
-    {target === "_blank" && <FiExternalLink size="0.6em" />}
-  </Link>
-);
+export default ({ children, target, onClick, ...rest }) => {
+  const isBlank = target === "_blank";
+  return (
+    <Link
+      {...rest}
+      onClick={e => {
+        if (e.ctrlKey || e.metaKey) {
+          // do nothing
+        } else if (onClick) {
+          e.preventDefault();
+          onClick(e);
+        }
+      }}
+      target={target}
+      {...(isBlank ? { rel: "noopener" } : undefined)}
+    >
+      {children}
+      {isBlank && <FiExternalLink size="0.6em" />}
+    </Link>
+  );
+};
