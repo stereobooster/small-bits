@@ -6,21 +6,21 @@ const emboss = "inset -1px -1px 0 0 #959da5";
 const focus = "0 0 0 0.2em #c8e1ff";
 const active = {
   transform: "translate(1px, 1px)",
-  "boxShadow": "none"
+  boxShadow: "none"
 };
 const activeFocus = {
-  "boxShadow": focus
+  boxShadow: focus
 };
 
 const Button = styled("button")(({ isMouse }) => ({
   font: "inherit",
   cursor: "pointer",
   // actual styles
-  "backgroundColor": "#fafbfc",
+  backgroundColor: "#fafbfc",
   border: "1px solid #c6cbd1",
-  "borderBottomColor": "#959da5",
-  "borderRadius": "3px",
-  "boxShadow": emboss,
+  borderBottomColor: "#959da5",
+  borderRadius: "3px",
+  boxShadow: emboss,
   color: "#444d56",
   padding: "0.2em 0.6em",
   // focus
@@ -30,10 +30,27 @@ const Button = styled("button")(({ isMouse }) => ({
   },
   ":active": active,
   ":focus": !isMouse && {
-    "borderColor": "#2188ff",
-    "boxShadow": [emboss, focus].join(", ")
+    borderColor: "#2188ff",
+    boxShadow: [emboss, focus].join(", ")
   },
-  ":active:focus": !isMouse && activeFocus
+  ":active:focus": !isMouse && activeFocus,
+  // touchscreen
+  "@media (hover: none)": {
+    minWidth: "1cm",
+    minHeight: "1cm",
+    userSelect: "none",
+    "-webkit-tap-highlight-color": "rgba(0, 0, 0, 0)",
+    // ripple
+    background:
+      "#fff radial-gradient(circle, transparent 1%, #fff 1%) center/15000%",
+    backgroundPosition: "center",
+    transition: "background 0.8s",
+    ":active": {
+      backgroundColor: "#333",
+      backgroundSize: "100%",
+      transition: "background 0s"
+    }
+  }
 }));
 
 Button.propTypes = {
